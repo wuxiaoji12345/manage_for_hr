@@ -1,0 +1,102 @@
+<!--_meta 作为公共模版分离出去-->
+{include file='pub/meta.html' /}
+<link rel="stylesheet" type="text/css" href="__HUIADMIN__/css/style.css" />
+<link rel="stylesheet" type="text/css" href="__HUIADMIN__/css/contral.css" />
+<link rel="stylesheet" type="text/css" href="../../static/bootstrap/css/bootstrap.min.css" />
+<!--/meta 作为公共模版分离出去-->
+<style type="text/css">
+
+.table td {
+	text-align: center;
+}
+
+</style>
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+{include file='pub/header.html' /}
+<!--/_header 作为公共模版分离出去-->
+<!--_menu 作为公共模版分离出去-->
+{include file='pub/menu.html' /}
+<!--/_menu 作为公共模版分离出去-->
+<section class="Hui-article-box">
+	<nav class="breadcrumb" style="height: 50px;"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 项目总结 <span class="c-gray en">&gt;</span> 重大阳性提醒</nav>
+	<div class="Hui-article" style="margin-top: 20px;">
+		<article class="cl pd-20">
+			<form class="mb-20" action="{:url('project_summary/BigDiseases/index')}" method="post">
+				<div class="row cl" style="margin-top: 15px;">
+
+					<label class="form-label col-xs-1 col-sm-1 text-r">疾病分类：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<span class="select-box radius ">
+							<select name="zx_code" class="select">
+								<option value="0">请选择</option>
+								{volist name='middleList' id='middleList_id'}
+								<option {if condition="$searchData['zx_code'] == $middleList_id.value"}selected{/if} value="{$middleList_id.value}">{$middleList_id.name}</option>
+								{/volist}
+							</select>
+						</span>
+					</div>
+					<label class="form-label col-xs-1 col-sm-1 text-r">疾病名称：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<input type="text" class="input-text" style="width:254px"   name="dis_name" value="{$searchData['dis_name'] ?? ''}">
+					</div>									
+					<div class="formControls col-xs-1 col-sm-1" style="margin-top: -3px;">
+						<button type="submit" class="btn btn-success radius" name="submit" value=1><i class="Hui-iconfont">&#xe665;</i>查询</button>			
+					</div>
+				</div>		
+			</form>
+			<div class="mt-20">
+				<table class="table table-border table-bordered table-hover table-bg mt-20">
+					<thead>
+						<tr class="text-c">
+							<!-- <th width="25"><input type="checkbox" name="" value=""></th> -->
+							<th>编号</th>
+							<th>疾病分类</th>
+							<th>疾病名称</th>
+							<th>疾病描述</th>
+							<th>创建时间</th>
+							<th>备注</th>
+						</tr>
+					</thead>
+					<tbody>
+						{empty name="data"}
+						<tr class="text-c">
+							<td colspan="6">暂无数据</td>
+						</tr>
+						{/empty}
+						{notempty name="data"}	
+						{volist name="data" id='list'}				
+						<tr>
+							<td>{$list['id']}</td>
+							<td>{$list['zx_name']}</td>
+							<td>{$list['dis_name']}</td>
+							<td>{$list['dis_content']}</td>
+							<td>{$list['create_time']}</td>
+							<td>{$list['remark']}</td>
+						</tr>
+						{/volist}
+						{/notempty}
+					</tbody>
+				</table>
+			</div>
+			<div class="page-bootstrap" style="text-align: center">	
+				{$diseaseList->render()|raw}
+			</div>
+		</article>
+	</div>
+</section>
+<!--_footer 作为公共模版分离出去-->
+{include file='pub/footer.html' /}
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__HUIADMIN__/js/WdatePicker.js"></script>
+<script type="text/javascript" src="../../static/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+
+</body>
+</html>

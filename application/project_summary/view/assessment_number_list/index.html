@@ -1,0 +1,77 @@
+<!--_meta 作为公共模版分离出去-->
+{include file='pub/meta.html' /}
+<link rel="stylesheet" type="text/css" href="__HUIADMIN__/css/style.css" />
+<link rel="stylesheet" type="text/css" href="__HUIADMIN__/css/contral.css" />
+<link rel="stylesheet" type="text/css" href="../../static/bootstrap/css/bootstrap.min.css" />
+<!--/meta 作为公共模版分离出去-->
+<style type="text/css">
+
+.table td {
+	text-align: center;
+}
+
+</style>
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+{include file='pub/header.html' /}
+<!--/_header 作为公共模版分离出去-->
+<!--_menu 作为公共模版分离出去-->
+{include file='pub/menu.html' /}
+<!--/_menu 作为公共模版分离出去-->
+<section class="Hui-article-box">
+	<nav class="breadcrumb" style="height: 50px;"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 项目总结 <span class="c-gray en">&gt;</span> 健康风险报告<span class="c-gray en">&gt;</span>评估人数列表<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px;" href="{:url('project_summary/HealthReport/index')}" title="返回" ><i class="Hui-iconfont" style="line-height:1.6em;">返回</i></a></nav>
+	<div class="Hui-article" style="margin-top: 20px;">
+		<article class="cl pd-20">
+			<div class="mt-20">
+				<table class="table table-border table-bordered table-hover table-bg mt-20">
+					<thead>
+						<tr class="text-c">
+							<th>编号</th>
+							<th>姓名</th>
+							<th>性别</th>
+							<th>证件类型</th>
+							<th>证件号</th>
+							<th>参与评估时间</th>
+							<th>评估报告状态</th>
+						</tr>
+					</thead>
+					<tbody>
+						{empty name="data"}
+						<tr class="text-c">
+							<td colspan="7">暂无数据</td>
+						</tr>
+						{/empty}
+						{notempty name="data"}
+						{volist name="data" id='list'}						
+						<tr>
+							<td>{$list['id']}</td>
+							<td>{$list['u_name']}</td>
+							<td>{$list['u_sex']}</td>
+							<td>{$list['u_identify_type']}</td>
+							<td>{$list['u_identify_code']}</td>
+							<td>{$list['h_create_time']}</td>
+							<td>{$list['h_report_status']}</td>
+						</tr>
+						{/volist}
+						{/notempty}
+					</tbody>
+				</table>
+			</div>
+		</article>
+	</div>
+</section>
+<!--_footer 作为公共模版分离出去-->
+{include file='pub/footer.html' /}
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__HUIADMIN__/js/WdatePicker.js"></script>
+<script type="text/javascript" src="../../static/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+
+</body>
+</html>

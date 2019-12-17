@@ -1,0 +1,82 @@
+$(document).ready(function () {
+
+    $("#user").focus(function () {
+        $(".alert").hide()
+
+    })
+
+    $("#pass").focus(function () {
+        $(".alert").hide()
+
+    })
+
+    $("#send").click(function () {
+        function trim(str) { //删除左右两端的空格  
+            return str.replace(/(^\s*)|(\s*$)/g, "");
+        }
+        var user = $("#user").val()
+        user = trim(user)
+        var pwd = $("#pass").val()
+        $.ajax({
+            url: 'http://etapi.etong-online.com/api/hr/user/userLogin.php',
+            dataType: 'json',
+            data: { account: user, password: pwd },
+            type: "POST",
+            success: function (res) {
+                // console.log(res)
+
+                if (res.errorCode == 10002) {
+                    $(".alert").show().children("strong").text(res.info);
+                    return;
+                }
+
+                if (res.errorCode == 10003) {
+                    $(".alert").show().children("strong").text(res.info);
+                    return;
+                }
+
+                if (res.errorCode == 10008) {
+                    $(".alert").show().children("strong").text(res.info);
+                    return;
+                }
+                if (res.errorCode == 10010) {
+                    $(".alert").show().children("strong").text(res.info);
+                    return;
+                }
+                if (res.status == 0) {
+                    $(".alert").show().children("strong").text('账号禁用了');
+                    return;
+                }
+
+                if (res.status == 1) {
+                    window.localStorage.setItem("username", user)
+                    window.localStorage.setItem("password", pwd)
+                    window.localStorage.setItem("id", res.data.hr_code)
+                    window.localStorage.setItem("taken", res.data.token)
+                    window.localStorage.setItem("mask", res.data.project_code)
+                    window.localStorage.setItem("name", res.data.name)
+                    window.localStorage.setItem("e_name", res.data.enterprise_name)
+                    // 判断是否存在登录状态
+                    window.sessionStorage.setItem("is_login", 1)
+                    $("#pass").val("");
+                    $("#pass").attr("type", "text")
+                    window.location.href = "./admin/home.html";
+
+                }
+
+
+
+            },
+            error: function (XMLHttpRequest) {
+                //请求过程中发生了错误，记录下错误的代码 例如 : 404 => page not found
+                alert("请求遇到了错误 , 错误代码 : " + XMLHttpRequest.status);
+                console.log(XMLHttpRequest)
+            }
+
+        })
+
+    })
+
+
+
+})

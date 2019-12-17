@@ -1,0 +1,35 @@
+<aside class="Hui-aside">
+    <div class="menu_dropdown bk_2">
+
+        <dl id="menu-index">
+            <dt>
+                <i class="Hui-iconfont">&#xe625;</i>
+                <a href="{:url('index/index/index')}" title="首页">首页</a>
+                <i class="Hui-iconfont menu_dropdown-arrow"></i>
+            </dt>
+        </dl>
+
+
+        {volist name="menuList" id="vo"}
+        <dl id="parent_menu_{$vo.id}">
+            <dt>
+                <i class="Hui-iconfont">{$vo.icon|raw}</i>{$vo.m_name}
+                <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+            </dt>
+            {notempty name="vo.menu_list"}
+            <dd>
+
+                <ul>
+                    {volist name="vo.menu_list" id="mo"}
+                    <li class="show_li" id="show_li_{$mo.id}">
+                        <a href="{$mo.m_url ?? 'javascript:;'}" title="{$mo.m_name}" >{$mo.m_name}</a>
+                    </li>
+                    {/volist}
+                </ul>
+            </dd>
+            {/notempty}
+        </dl>
+        {/volist}
+    </div>
+</aside>
+<div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);" onClick="displaynavbar(this)"></a></div>

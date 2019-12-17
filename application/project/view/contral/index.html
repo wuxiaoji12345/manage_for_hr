@@ -1,0 +1,79 @@
+﻿<!--_meta 作为公共模版分离出去-->
+{include file='pub/meta.html' /}
+<!--/meta 作为公共模版分离出去-->
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+{include file='pub/header.html' /}
+<!--/_header 作为公共模版分离出去-->
+<!--_menu 作为公共模版分离出去-->
+{include file='pub/menu.html' /}
+<!--/_menu 作为公共模版分离出去-->
+<link rel="stylesheet" type="text/css" href="__LIB__/bootstrap-3.3.7-dist/css/bootstrap.css" />
+<section class="Hui-article-box">
+    <nav class="breadcrumb" style="height: 50px;">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>
+        项目管理 <span class="c-gray en">&gt;</span>
+        合同管理<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+                 href="javascript:location.replace(location.href);" title="刷新">
+        <i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
+    <div class="Hui-article" style="margin-top: 20px;">
+        <article class="cl pd-20">
+            <div class="cl pd-5 bg-1 bk-gray">
+				<span class="r pt-5 pr-5">
+                共有数据 ：<strong>{$count ?? '0'}</strong> 条
+            </span>
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg table-sort">
+                    <thead>
+                    <tr class="text-c">
+                        <th width="">编号</th>
+                        <th width="">项目名称</th>
+                        <th width="">开始时间</th>
+                        <th width="">结束时间</th>
+                        <th width="">项目状态</th>
+                        <th width="">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {empty name="list"}
+                    <tr class="text-c">
+                        <td colspan="6">暂无数据</td>
+                    </tr>
+                    {/empty}
+                    {notempty name="list"}
+                    {volist name="list" id="vo"}
+                    <tr class="text-c">
+                        <td>{$Think.config.paginate.page_size*((!empty($Think.get.page)?($Think.get.page):1)-1)+($key+1)}</td>
+                        <td>{$vo.project_name}</td>
+                        <td>{$vo.project_begin_time}</td>
+                        <td>{$vo.project_end_time}</td>
+                        <td>{$vo.status_name}</td>
+                        <td><a href='{$vo.file_path}'>下载</a></td>
+                    </tr>
+                    {/volist}
+                    {/notempty}
+                    </tbody>
+                </table>
+                <div class="page-bootstrap">{$list->render()|raw}</div>
+            </div>
+        </article>
+    </div>
+</section>
+<!--_footer 作为公共模版分离出去-->
+{include file='pub/footer.html' /}
+<!--/_footer /作为公共模版分离出去-->
+
+<script type="text/javascript" src="__LIB__/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="__LIB__/laypage/1.2/laypage.js"></script>
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+
+</body>
+</html>

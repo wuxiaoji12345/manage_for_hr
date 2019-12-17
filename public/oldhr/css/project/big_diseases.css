@@ -1,0 +1,132 @@
+html,body{
+    /* height:100%; */
+    background-color: #f1f2f7;
+}
+.right-col{
+    /* width: 100%; */
+    /* flex: 1; */
+    position: relative;
+    background-color: #f1f2f7;
+    padding-left: 20px;
+}
+.c-management {
+    width:100%;
+    height:100%;
+    /* position: absolute; */
+    /* top:0;
+    left:0; */
+    /* background-color: #fff; */
+}
+.c-management .title{
+    width:100%;
+    height:43px;
+    position: relative;
+    background-color: #f1f2f7; 
+    padding-top: 20px;
+    box-sizing: border-box;
+}
+.c-management .title span{   
+   font-size: 16px;  
+   margin-right: 41px;
+   color: #01b2a9;  
+}
+.c-management .line {
+    width:100%;
+    height:1px;
+    background-color: #d0d0d0;    
+}
+.c-management .manage-serach{   
+    height:50px;
+    margin-right: 10px;
+    border:1px solid #000;
+    background-color: #f1f2f7;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    padding-top: 15px;
+    box-sizing: border-box;
+    padding-left: 10px;
+  
+}
+.manage-serach #zx_code{
+    width:170px;   
+    position: absolute;
+    top: 10px;
+    left: 90px;  
+}
+.manage-serach span {
+    margin-left: 285px;
+}
+.manage-serach #zjh{
+    width:200px;   
+    position: absolute;
+    top: 10px;
+    left: 434px;
+   
+}
+.biaoge {
+    margin-right: 10px;
+    background:#fff;
+}
+#btn{
+    width: 80px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 7px;
+    color: #000;
+    position: absolute;
+    top: 10px;
+    left:700px;
+    background: #3fcbbe;
+  
+
+}
+/* 分页样式 */
+.wrapper{
+    
+    /* width:400px; */
+    /* height:100px;  */
+    margin-top: 60px;
+    margin-left: 300px;
+    text-align: right;
+    margin-right: 20px;
+
+}
+.M-box{  
+    display: inline;
+    position: relative;
+}
+.M-box span {
+    display: inline-block;
+    font-size: 18px;
+}
+.M-box a {
+    display: inline-block;
+    font-size: 18px;
+    margin: 0 5px;
+    
+}
+.M-box .jump-ipt{
+    width:40px;     
+    margin:0;
+    padding:0;
+    position: absolute;
+    right:-40px;
+}
+.tips{
+      
+    font-size: 18px;
+    display: inline;
+    margin-left: 50px;
+}
+.tips span {
+    margin: 0 5px;
+}
+.now, .count {
+    padding: 24px 0px;
+    color: #f00;
+}
+.active {
+    color:#3fcbbe;
+}

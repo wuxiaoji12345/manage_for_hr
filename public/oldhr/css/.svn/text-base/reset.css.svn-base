@@ -1,0 +1,46 @@
+
+body,p,h1,h2,h3,h4,h5,h6,ul,ol,dl,dt,dd,li,table,tr,td {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-size: 14px;
+}
+
+a {
+	text-decoration: none;
+	outline: none;
+	border:none;
+	font-size: 14px;
+	color: #5e5e5e;
+}
+
+a:hover {	
+	color: #5e5e5e;
+	text-decoration: none;
+}
+
+img,input,button {
+	border: 0 none;
+	outline-style: none;
+	vertical-align: middle;
+	border-style:none;
+	margin: 0;
+	padding: 0;
+}
+
+
+
+
+
+.clearfix::after {
+	content: "";
+	height: 0;
+	line-height: 0;
+	display: block;
+	clear: both;
+	visibility: hidden;
+}
+
+.clearfix {
+	zoom: 1;
+}

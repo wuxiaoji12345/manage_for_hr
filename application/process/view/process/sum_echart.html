@@ -1,0 +1,44 @@
+<!--_meta 作为公共模版分离出去-->
+{include file='pub/meta.html' /}
+<!--/meta 作为公共模版分离出去-->
+</head>
+<link rel="stylesheet" type="text/css" href="__HUIADMIN__/css/style.css" />
+<link rel="stylesheet" type="text/css" href="__HUIADMIN__/css/contral.css" />
+<link rel="stylesheet" type="text/css" href="../../static/bootstrap/css/bootstrap.min.css" />
+<style type="text/css">
+    .yu-date{
+        width:100%;
+        padding-top: 50px;
+        padding-left:20px;
+        box-sizing: border-box;
+        position: relative;
+    }
+    #l-yu-date{
+        width:55%;
+        height:400px;
+        background:#fff!important;
+        padding-right:5px;
+    }
+    #r-yu-date{
+        width:42.5%;
+        height:330px;
+        background-color:#fff!important;
+        position: absolute;
+        top: 30px;
+        right: 12px;
+    }
+</style>
+<div class="yu-date">
+    <div id="l-yu-date"></div>
+    <div id="r-yu-date"></div>
+    <span>{$e_name}</span>
+</div>
+<!--_footer 作为公共模版分离出去-->
+{include file='pub/footer.html' /}
+<!--/_footer /作为公共模版分离出去-->
+<script type="text/javascript" src="__LIB__/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="__LIB__/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="__LIB__/webuploader/0.1.5/webuploader.min.js"></script>
+<script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/oldhr/js/echarts.min.js"></script>
+<script type="text/javascript" src="/oldhr/js/progect/echart.process.js"></script>

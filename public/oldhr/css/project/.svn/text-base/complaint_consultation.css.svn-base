@@ -1,0 +1,82 @@
+.manage-box{
+    height:100px;
+    margin-right: 20px;
+    margin-left:20px;
+    padding-left:10px;
+    box-sizing: border-box;
+    border:1px solid #000;
+    background-color: #f1f2f7;
+    position: relative;
+}
+
+.manage-box #u_name{
+    width: 160px;
+    position: absolute;
+    top: 9px;
+    left:650px;
+}
+#complaint_type{
+    width:160px; 
+    margin-top:10px;
+    margin-right:40px;
+}
+#complaint_topicid{
+    width:160px; 
+    margin-top:10px;
+    margin-left:22px;
+    margin-right:50px;
+}
+.tousu {
+    /* position: relative; */
+}
+.tousu-start {
+    position: absolute;
+    top: 62px;
+    left: 286px;
+   
+}
+.tousu-start i {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    background: url(../../images/24.png) no-repeat center;
+    position: relative;
+    top: 4px;
+    left: 168px;
+
+
+}
+.tousu-over i {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    background: url(../../images/24.png) no-repeat center;
+    position: relative;
+    top: -35px;
+    left: 691px;
+
+}
+
+.tousu-start #start_time{
+    position: absolute;
+    top: -3px;
+    left: 93px;
+}
+.tousu-over #end_time{
+    position: absolute;
+    top: 58px;
+    left: 565px;
+}
+#btn-search{
+    width: 80px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 7px;
+    color: #000;   
+    position: absolute;
+    top: 10px;
+    left: 900px;
+    background: #3fcbbe;
+
+}

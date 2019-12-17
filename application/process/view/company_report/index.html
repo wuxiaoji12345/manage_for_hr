@@ -1,0 +1,178 @@
+﻿<!--_meta 作为公共模版分离出去-->
+{include file='pub/meta.html' /}
+<!--/meta 作为公共模版分离出去-->
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+{include file='pub/header.html' /}
+<!--/_header 作为公共模版分离出去-->
+<!--_menu 作为公共模版分离出去-->
+{include file='pub/menu.html' /}
+<!--/_menu 作为公共模版分离出去-->
+<link rel="stylesheet" type="text/css" href="__LIB__/bootstrap-3.3.7-dist/css/bootstrap.css" />
+<section class="Hui-article-box">
+	<nav class="breadcrumb" style="height: 50px;"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 项目过程管理 <span class="c-gray en">&gt;</span> 体检报告查询<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+	<div class="Hui-article" style="margin-top: 20px;">
+		<article class="cl pd-20">
+			<form class="mb-20" method="post" action="/process/CompanyReport/index.html">
+				<div class="row cl">
+					<label class="form-label col-xs-1 col-sm-1 text-r">员工工号：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<input type="text" class="input-text" style="width:254px" placeholder="请输入员工工号"  name="u_job_code" value="{$searchData['u_job_code'] ?? ''}">
+					</div>
+					<label class="form-label col-xs-1 col-sm-1 text-r">证件号码：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<input type="text" class="input-text" style="width:254px" placeholder="请输入员工证件号码"  name="u_identify_code" value="{$searchData['u_identify_code'] ?? ''}">
+					</div>
+					<div class="formControls col-xs-1 col-sm-1" style="margin-top: -3px;">
+						<button type="submit" class="btn btn-success radius" name=""><i class="Hui-iconfont">&#xe665;</i>查询</button>
+					</div>
+				</div>
+			</form>
+			<div class="cl pd-5 bg-1 bk-gray mt-20"><span class="r">共有数据：<strong>{$count ?? '0'}</strong> 条</span> </div>
+			<div class="mt-20">
+				<table class="table table-border table-bordered table-hover table-bg mt-20">
+					<thead>
+					<tr class="text-c">
+						<th width="">序号</th>
+						<th width="">体检人姓名</th>
+						<th width="">体检套餐</th>
+						<th width="">体检机构</th>
+						<th width="">体检时间</th>
+						<th width="">报告状态</th>
+						<th width="">报告类型</th>
+						<th width="">操作</th>
+					</tr>
+					</thead>
+					<tbody>
+					{empty name="list"}
+					<tr class="text-c">
+						<td colspan="8">请输入员工姓名及证件号码查询</td>
+					</tr>
+					{/empty}
+					{notempty name="list"}
+					{volist name="list" id="vo"}
+					<tr class="text-c">
+						<td>{$Think.config.paginate.page_size*((!empty($Think.get.page)?($Think.get.page):1)-1)+($key+1)}</td>
+						<td>{$vo.append_name}</td>
+						<td>{$vo.p_name}</td>
+						<td>{$vo.store_name}</td>
+						<td>{$vo.append_schedule}</td>
+						<td>{$vo.status}</td>
+						<td>体检报告</td>
+						<td>
+							<a target="_blank" class="down btn btn-success" onclick="previewReport(1,'{$vo.report_file_path}')"> 点击预览 </a>
+							<a class="down btn btn-success" onclick="previewReport(2,'{$vo.report_file_path}')"> 点击下载 </a>
+						</td>
+					</tr>
+					{/volist}
+					{/notempty}
+					</tbody>
+				</table>
+				{notempty name="list"}
+				<div class="page-bootstrap">{$list->render()|raw}</div>
+				{/notempty}
+			</div>
+		</article>
+	</div>
+</section>
+<!--_footer 作为公共模版分离出去-->
+{include file='pub/footer.html' /}
+<!--/_footer /作为公共模版分离出去-->
+
+<div class="col-xs-12 col-sm-12"  style="display: none;" id="yanzhengma">
+	<div class="row cl" style="float: left;margin-top: 10px;margin-left: 10px;">
+		<input type="text" style="width: 160px;text-align: center;" class="input-text" id="yzm_code" name="yzm_code" value="" autocomplete="off" placeholder="请输入验证码">
+		<img style="margin-left: 10px;width: 75px;height: 32px;" id="imageUrl" src="" alt="图片验证码" onclick="this.src=this.src+'&t='+Math.random()">
+	</div>
+
+	<div class="row cl" style="margin-top: 10px;margin-left: 10px;">
+		<input style="display: none" id="report_file_path" value="">
+		<input style="display: none" id="report_file_path_type" value="">
+		<a class="btn btn-primary radius" onclick="downloadFile()" style="float: left;margin-left: 60px;margin-top: 20px;" >确认</a>
+		<a class="btn btn-success radius" onclick="close_layer_div()" style="float: right;margin-right: 60px;margin-top: 20px;">取消</a>
+
+	</div>
+</div>
+
+<script type="text/javascript" src="__LIB__/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="__LIB__/laypage/1.2/laypage.js"></script>
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+
+    function previewReport(type, report_file_path) {
+        $("#yzm_code").val("");
+        $("#report_file_path").val(report_file_path);
+        $("#report_file_path_type").val(type);
+		var imageUrl = '/process/CompanyReport/login_captcha_code?report_file_path='+report_file_path;
+		$("#imageUrl").attr("src",imageUrl);
+        layer.open({
+            type: 1,
+            skin: 'layui-layer-molv', //样式类名
+            anim: 2,
+            title:"请输入验证码",
+            area: ['310px', '180px'], //宽高
+            shadeClose: true, //开启遮罩关闭
+            content: $('#yanzhengma')
+        });
+        return;
+    }
+
+    function downloadFile() {
+        var report_file_path = $("#report_file_path").val();
+        var type = $("#report_file_path_type").val();
+        var yanzhengma = $("#yzm_code").val();
+        if (!yanzhengma) {
+            layer.alert('请输入验证码', {title: '错误信息', icon: 2});
+            return false;
+        }
+
+        $.ajax({
+            url: '/process/CompanyReport/previewReport',
+            type: 'GET',
+            dataType: 'json',
+            data: {report_file_path: report_file_path,yanzhengma:yanzhengma},
+            beforeSend: function () {
+            },
+            success: function (result) {
+                console.log(result);
+                if (result.code == 1) {
+                    if (type == 1) {
+                        window.open(result.data);
+                    } else {
+                        var link = document.createElement('a');
+                        link.href = result.data;
+                        var fileName = result.data.substring(result.data.lastIndexOf('/') + 1, result.data.length);
+                        link.download = fileName;
+                        var e = document.createEvent('MouseEvents');
+                        e.initEvent('click', true, true);
+                        link.dispatchEvent(e);
+                    }
+                    layer.closeAll();
+                } else {
+                    $("#yzm_code").val();
+                    $("#imageUrl").click();
+                    layer.alert(result.msg, {title: '错误信息', icon: 2});
+                    return false;
+                }
+
+            },
+            complete: function () {
+                //请求完成后的处理
+            },
+            error: function (XMLHttpRequest) {
+                //请求过程中发生了错误，记录下错误的代码 例如 : 404 => page not found
+                alert("请求遇到了错误 , 错误代码 : " + XMLHttpRequest.status);
+            }
+        });
+    }
+
+    function close_layer_div() {
+        layer.closeAll();
+    }
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+
+</body>
+</html>

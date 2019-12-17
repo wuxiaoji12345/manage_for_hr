@@ -1,0 +1,153 @@
+﻿<!--_meta 作为公共模版分离出去-->
+{include file='pub/meta.html' /}
+<!--/meta 作为公共模版分离出去-->
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+{include file='pub/header.html' /}
+<!--/_header 作为公共模版分离出去-->
+<!--_menu 作为公共模版分离出去-->
+{include file='pub/menu.html' /}
+<!--/_menu 作为公共模版分离出去-->
+<link rel="stylesheet" type="text/css" href="__HUIADMIN__/css/style.css" />
+<link rel="stylesheet" type="text/css" href="__HUIADMIN__/css/contral.css" />
+<link rel="stylesheet" type="text/css" href="../../static/bootstrap/css/bootstrap.min.css" />
+<section class="Hui-article-box">
+	<nav class="breadcrumb" style="height: 50px;"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 项目过程管理 <span class="c-gray en">&gt;</span> 投诉咨询管理<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+	<div class="Hui-article" style="margin-top: 20px;">
+		<article class="cl pd-20" >
+			<form class="mb-20" method="post" action="/process/ComplaintConsultation/index.html">
+				<div class="row cl">
+					<label class="form-label col-xs-1 col-sm-1 text-r">投诉类型：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+                        <span class="select-box radius ">
+                            <select name="complaint_type" class="select">
+                                <option value="0">全部</option>
+                                {volist name='complaint_type' id='complaint_type_id'}
+                                    <option {if condition="$searchData['complaint_type'] == $complaint_type_id.id"}selected{/if} value="{$complaint_type_id.id}">{$complaint_type_id.name}</option>
+								{/volist}
+                            </select>
+                        </span>
+					</div>
+					<label class="form-label col-xs-1 col-sm-1 text-r">投诉主题：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+                        <span class="select-box radius ">
+                            <select name="complaint_topicid" class="select">
+                                <option value="0">全部</option>
+                                {volist name='complaint_topicid' id='complaint_topicid_id'}
+                                    <option {if condition="$searchData['complaint_topicid'] == $complaint_topicid_id.id"}selected{/if} value="{$complaint_topicid_id.id}">{$complaint_topicid_id.name}</option>
+								{/volist}
+                            </select>
+                        </span>
+					</div>
+					<label class="form-label col-xs-1 col-sm-1 text-r">处理状态：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+                        <span class="select-box radius ">
+                            <select name="complaint_status" class="select">
+                                <option value="0">全部</option>
+                                {volist name='complaint_status' id='complaint_status_id'}
+                                    <option {if condition="$searchData['complaint_status'] == $complaint_status_id.id"}selected{/if} value="{$complaint_status_id.id}">{$complaint_status_id.name}</option>
+								{/volist}
+                            </select>
+                        </span>
+					</div>
+				</div>
+				<div class="row cl" style="margin-top: 20px;">
+					<label class="form-label col-xs-1 col-sm-1 text-r">发布者：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<input type="text" class="input-text" style="width:254px" placeholder="请输入发布者"  name="u_name" value="{$searchData['u_name'] ?? ''}">
+					</div>
+					<label class="form-label col-xs-1 col-sm-1 text-r">投诉开始时间：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<input id="start_time" name="start_time" type="text" class="input-text" placeholder="选择开始时间"  style="width:254px" onClick="WdatePicker()" value="{$searchData['start_time'] ?? ''}">
+					</div>
+					<label class="form-label col-xs-1 col-sm-1 text-r">投诉结束时间：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<input id="end_time" name="end_time" type="text" class="input-text" placeholder="选择结束时间"  style="width:254px" onClick="WdatePicker()" value="{$searchData['end_time'] ?? ''}">
+					</div>
+					<div class="formControls col-xs-1 col-sm-1" style="margin-top: -3px;">
+						<button type="submit" class="btn btn-success radius" name=""><i class="Hui-iconfont">&#xe665;</i>查询</button>
+					</div>
+				</div>
+			</form>
+			<div class="cl pd-5 bg-1 bk-gray mt-20">  <span class="r">共有数据：<strong>{$count ?? '0'}</strong> 条</span> </div>
+			<div class="mt-20">
+				<table class="table table-border table-bordered table-hover table-bg table-sort">
+					<thead>
+					<tr class="text-c">
+						<th width="">序号</th>
+						<th width="">发布者</th>
+						<th width="">工号</th>
+						<th width="">投诉类型</th>
+						<th width="">投诉主题</th>
+						<th width="">投诉标题</th>
+						<th width="">投诉时间</th>
+						<th width="">处理状态</th>
+						<th width="">操作</th>
+					</tr>
+					</thead>
+					<tbody>
+					{empty name="list"}
+					<tr class="text-c">
+						<td colspan="9">暂无数据</td>
+					</tr>
+					{/empty}
+					{notempty name="list"}
+					{volist name="list" id="vo" }
+					<tr class="text-c">
+						<td>{$Think.config.paginate.page_size*((!empty($Think.get.page)?($Think.get.page):1)-1)+($key+1)}</td>
+						<td>{$vo.u_name}</td>
+						<td>{$vo.complaint_member_gh}</td>
+						<td>
+							{volist name='complaint_type' id='complaint_type_id'}
+								{if condition="$vo['complaint_type'] == $complaint_type_id.id"}{$complaint_type_id.name}{/if}
+							{/volist}
+						</td>
+						<td>
+							{volist name='complaint_topicid' id='complaint_topicid_id'}
+								{if condition="$vo['complaint_topicid'] == $complaint_topicid_id.id"}{$complaint_topicid_id.name}{/if}
+							{/volist}
+						</td>
+						<td>{$vo.complaint_title}</td>
+						<td>{$vo.complaint_addtime}</td>
+						<td>
+							{volist name='complaint_status' id='complaint_status_id'}
+							{if condition="$vo['complaint_status'] == $complaint_status_id.id"}{$complaint_status_id.name}{/if}
+							{/volist}
+						</td>
+						<td>
+							<a href='detail/id/{$vo.complaint_id}'>查看</a>
+						</td>
+					</tr>
+					{/volist}
+					{/notempty}
+					</tbody>
+				</table>
+				<div class="page-bootstrap">{$list->render()|raw}</div>
+			</div>
+		</article>
+	</div>
+</section>
+<!--_footer 作为公共模版分离出去-->
+{include file='pub/footer.html' /}
+<!--/_footer /作为公共模版分离出去-->
+<script type="text/javascript" src="__LIB__/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="__LIB__/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="__LIB__/webuploader/0.1.5/webuploader.min.js"></script>
+<script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="__HUIADMIN__/js/WdatePicker.js"></script>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+	/*$("#start_time").datetimepicker({
+		format: "yyyy-mm-dd hh:ii:ss",
+		autoclose: true
+	});
+	$("#end_time").datetimepicker({
+		format: "yyyy-mm-dd hh:ii:ss",
+		autoclose: true
+	});*/
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+
+</body>
+</html>

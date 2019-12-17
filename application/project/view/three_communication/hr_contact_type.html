@@ -1,0 +1,44 @@
+<!--_meta 作为公共模版分离出去-->
+{include file='pub/meta.html' /}
+<!--/meta 作为公共模版分离出去-->
+</head>
+<link rel="stylesheet" type="text/css" href="__LIB__/bootstrap-3.3.7-dist/css/bootstrap.css" />
+<div class="cl pd-5 bg-1 bk-gray">
+    <span class="l pt-5 pr-5"><strong>{$table_title}</strong></span>
+</div>
+<div class="mt-20">
+    <table class="table table-border table-bordered table-hover table-bg table-sort">
+        <thead>
+        <tr class="text-c">
+            <th width="">公司</th>
+            <th width="">联系人</th>
+            <th width="">固定电话</th>
+            <th width="">移动电话</th>
+            <th width="">E-mail地址</th>
+            <th width="">具体分工</th>
+            <th width="">备注</th>
+        </tr>
+        </thead>
+        <tbody>
+        {empty name="list"}
+        <tr class="text-c">
+            <td colspan="7">暂无数据</td>
+        </tr>
+        {/empty}
+        {notempty name="list"}
+        {volist name="list" id="vo"}
+        <tr class="text-c">
+            <td>{$vo.c_company}</td>
+            <td>{$vo.c_person}</td>
+            <td>{$vo.c_tel}</td>
+            <td>{$vo.c_cell}</td>
+            <td>{$vo.c_email}</td>
+            <td>{$vo.c_do}</td>
+            <td>{$vo.c_remark}</td>
+        </tr>
+        {/volist}
+        {/notempty}
+        </tbody>
+    </table>
+    <div class="page-bootstrap">{$list->render()|raw}</div>
+</div>

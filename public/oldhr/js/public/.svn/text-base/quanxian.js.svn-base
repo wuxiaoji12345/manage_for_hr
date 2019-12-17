@@ -1,0 +1,282 @@
+var project_code = window.localStorage.getItem('mask');
+var hr_code = window.localStorage.getItem('id');
+var token = window.localStorage.getItem('taken');
+
+function admin() {
+
+    //显示hr信息
+     var username = window.localStorage.getItem("name")
+     $("#admin").text("欢迎您,"+username)
+    //  console.log(username)
+
+    
+  
+ 
+
+
+    // 点击菜单栏伸缩功能
+    $("body").on("click",".pro-manage",function(){
+        if($(this).hasClass("addc")){
+          $(this).parent().find("ul").show();
+          $(this).removeClass("addc");
+          
+          $(this).children(".add").hide().siblings(".sub").show()
+        }else{
+          $(this).children(".add").show().siblings(".sub").hide()
+          $(this).parent().find("ul").hide();
+          $(this).addClass("addc");
+          
+        }
+      })
+
+      // 点击高亮显示
+      var url1 = window.location.pathname;    
+              
+    if(url1 == '/admin/home.html'){
+        $('.home-page a').addClass('addhover');
+        // console.log(1)
+    }
+
+    $.ajax({
+        url:getUrl('left'),
+        methods: "GET",
+        dataType: 'json',
+        data: {
+            project_code: project_code,
+            hr_code: hr_code,
+            token: token
+        },
+        success: function (res) {
+            //  console.log(res) 
+            if (res.status == 1) {
+                var data = res.data.list;
+                //    console.log(data)
+
+                var str = '';
+               
+                var url1 = window.location.pathname;    
+              
+                    // if(url1 == '/admin/home.html'){
+                    //     $('.home-page').addClass('addhover')
+                    // }
+                
+                // console.log(url1) 
+        
+                $.each(data, function (key, val, url) {
+                    str += '<div style = "margin:10px 0"><div class="pro-manage">';
+                    str += '		<i class="pro-manage-biao"></i>';
+                    str += '		<a href="javascript:;" class="pro-manage-title">' + val.m_name + '</a>';
+                    str += '		<i class="add"></i>';
+                    str += '		<i class="sub"></i> ';
+                    str += '</div>';
+                    str += '<ul class="pro-contract-first">';
+                    $.each(val.menu_list, function (k, val) {
+                    var aa = ''
+                    if(url1 ==  val.m_url){
+                      aa = "class='addhover'"
+                    }
+                        str += '	<li><a   '+aa+' href="' + val.m_url + '">' + val.m_name + '</a></li>';
+
+                        // str += '	<li><a href="' + val.m_url + '">' + val.m_name + '</a></li>';
+                    });
+                    str += '</ul></div>';
+
+                });
+
+                $(".side-bar").html(str);
+
+            }
+
+            if (res.status == 0) {
+                alert(res.info)
+            }
+
+
+        },
+        complete: function () {
+            //请求完成后的处理
+        },
+        error: function (XMLHttpRequest) {
+
+
+
+            //请求过程中发生了错误，记录下错误的代码 例如 : 404 => page not found
+             alert("请求遇到了错误 , 错误代码 : " + XMLHttpRequest.status);
+
+        },
+
+    })
+
+
+}
+
+//配置获取接口地址
+function getUrl(param){
+    var project_code = window.localStorage.getItem('mask');
+    var token = window.localStorage.getItem('taken');
+
+    var url = 'http://etapi.etong-online.com';
+    // 登入接口
+    if(param=='login'){
+        return url+'/api/hr/user/userLogin.php';
+
+    }
+    // 左边菜单栏接口
+    if(param=='left'){
+        return url+'/api/hr/user/getMenuList.php';
+
+    }
+
+    //首页体检人数接口
+
+    if(param=='reservation'){
+        return url+'/api/hr/index/reservationStatistics.php?project_code='+project_code+'&token='+token;
+
+    }
+    //首页投诉信息接口
+    if(param=='complaint'){
+        return url+'/api/hr/index/getComplaint.php?project_code='+project_code+'&token='+token;
+
+    }
+    //合同接口
+    if(param=='contral'){
+        return url+'/api/hr/contract/contractList.php?project_code='+project_code+'&token='+token;
+    }
+    //套餐机构接口
+    if(param=='project_package'){
+        return url+'/api/hr/product/productList.php?project_code='+project_code+'&token='+token;
+    }
+    //套餐详情链接
+    if(param=='product_detail'){
+        return "/admin/project/product_detail.html?p_code=";
+    }
+    //套餐详情接口
+    if(param=='product_detail_url'){
+        return url+'/api/hr/product/productDetail.php?project_code='+project_code+'&token='+token+'&product_code=';
+    }
+    //加项详情链接
+    if(param=='addon_list'){
+        return "/admin/project/addon_list.html?p_code=";
+    }
+    //加项详情接口
+    if(param=='addon_list_url'){
+        return url+'/api/hr/product/addonList.php?project_code='+project_code+'&token='+token+'&product_code=';
+    }
+    //加项详情查看详情地址链接
+    if(param=='addon_list_detail'){
+        return "/admin/project/addon_list_detail.html?p_code=";
+    }
+    //加项详情查看详情地址接口
+    if(param=='addon_list_detail_url'){
+        return url+'/api/hr/product/addonDetail.php?project_code='+project_code+'&token='+token+'&addon_code=';
+    }
+    //查看门店链接
+    if(param=='check_store'){
+        return "/admin/project/check_store.html?p_code=";
+    }
+    //查看门店地址接口
+    if(param=='check_store_url'){
+        return url+'/api/hr/product/storeList.php?project_code='+project_code+'&token='+token+'&product_code=';
+    }
+    //查看员工信息接口
+    if(param=='employee_info'){
+        return url+'/api/hr/user/userList.php?project_code='+project_code+'&token='+token;
+    }
+    //三方通讯接口
+    if(param=='three_communication'){
+        return url+'/api/hr/project/contactList.php?project_code='+project_code+'&token='+token;
+    }
+    //员工沟通材料接口
+    if(param=='staff_communication_materials'){
+        return url+'/api/hr/project/contactFileList.php?project_code='+project_code+'&token='+token;
+    }
+    //投诉咨询接口
+    if(param=='complaint_consultation_url'){
+        return url+'/api/hr/complaint/complaintList.php?project_code='+project_code+'&token='+token;
+    }
+    //投诉咨询查看链接
+    if(param=='complaint_consultation'){
+        return "/admin/project/complaint_consultation_detail.html?complaint_id=";
+    }
+    //投诉咨询接口
+    if(param=='complaint_consultation_detail_url'){
+        return url+'/api/hr/complaint/complaintDetail.php?project_code='+project_code+'&token='+token;
+    }
+    //对账单接口
+    if(param=='statement'){
+        return url+'/api/hr/balance/balanceList.php?project_code='+project_code+'&token='+token;
+    }
+    //重大疾病提醒接口
+    if(param=='big_diseases'){
+        return url+'/api/hr/project/diseaseList.php?project_code='+project_code+'&token='+token;
+    }
+    //重大疾病分类接口
+    if(param=='middleItem'){
+        return url+'/api/hr/project/middleItemList.php?project_code='+project_code+'&token='+token;
+    }
+    //健康风险评估接口
+    if(param=='health_report'){
+        return url+'/api/hr/healthRisk/riskAssessmentStatistics.php?project_code='+project_code+'&token='+token;
+    }
+    //健康风险评估查看链接
+    if(param=='health_report_url'){
+        return "/admin/project_summary/assessment_number_list.html";
+    }
+    //健康风险评估查看接口
+    if(param=='health_report_list'){
+        return url+'/api/hr/healthRisk/riskAssessmentDetail.php?project_code='+project_code+'&token='+token;
+    }
+    //团检报告接口
+    if(param=='group_report'){
+        return url+'/api/hr/groupReport/groupReportList.php?project_code='+project_code+'&token='+token;
+    }
+
+    //体检数据汇总接口
+    if(param=='sum'){
+        return url+'/api/hr/summarizationData/summaryList.php?project_code='+project_code+'&token='+token;
+    }
+
+    //体检数据汇总查询接口
+    if(param=='sum_search'){
+        return url+'/api/hr/summarizationData/summaryListQuery.php?project_code='+project_code+'&token='+token;
+    }
+    //体检数据汇总的项目套餐汇总
+    if(param=='sum_all'){
+        return url+'/api/hr/summarizationData/summaryOfProduct.php?project_code='+project_code+'&token='+token;
+    }
+
+    //修改密码接口
+    if(param=='update'){
+        return url+'/api/hr/user/updatePwd.php';
+    }
+    //登入接口
+    if(param=='login'){
+        return url+'/api/hr/user/userLogin.php';
+    }
+
+
+}
+
+//获取日期
+function getNowFormatDate(month) {
+    var date = new Date();
+    var seperator1 = "-";
+    var year = date.getFullYear();
+    var month = date.getMonth() + month;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = year + seperator1 + month + seperator1 + strDate;
+    return currentdate;
+}
+
+
+
+    
+
+
+

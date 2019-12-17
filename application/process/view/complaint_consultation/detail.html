@@ -1,0 +1,92 @@
+<!--_meta 作为公共模版分离出去-->
+{include file='pub/meta.html' /}
+<!--/meta 作为公共模版分离出去-->
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+{include file='pub/header.html' /}
+<!--/_header 作为公共模版分离出去-->
+<!--_menu 作为公共模版分离出去-->
+{include file='pub/menu.html' /}
+<!--/_menu 作为公共模版分离出去-->
+<link rel="stylesheet" type="text/css" href="__LIB__/bootstrap-3.3.7-dist/css/bootstrap.css" />
+<section class="Hui-article-box">
+    <nav class="breadcrumb" style="height: 50px;"><i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 项目过程管理<span class="c-gray en">&gt;</span>
+        <a href="{:url('process/complaint_consultation/index')}">投诉咨询管理</a>
+        <span class="c-gray en">&gt;</span>投诉咨询详情
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+           href="javascript:location.replace(location.href);" title="刷新">
+            <i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
+    <div class="Hui-article" style="margin-top: 20px;">
+        <article class="cl pd-20">
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-hover table-bg table-sort">
+                    <thead>
+                    <tr class="text-c">
+                        <th width="">发布人</th>
+                        <th width="">工号</th>
+                        <th width="">证件号</th>
+                        <th width="">手机号</th>
+                        <th width="">投诉类型</th>
+                        <th width="">投诉主题</th>
+                        <th width="">投诉标题</th>
+                        <th width="">投诉内容</th>
+                        <th width="">投诉时间</th>
+                        <th width="">处理状态</th>
+                        <th width="">处理意见</th>
+                        <th width="">备注</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {empty name="data"}
+                    <tr class="text-c">
+                        <td colspan="12">暂无数据</td>
+                    </tr>
+                    {/empty}
+                    {notempty name="data"}
+                    <tr class="text-c">
+                        <td>{$data.u_name}</td>
+                        <td>{$data.complaint_member_gh}</td>
+                        <td>{$data.u_identify_code}</td>
+                        <td>{$data.u_mobile}</td>
+                        <td>
+                            {volist name='complaint_type' id='complaint_type_id'}
+                            {if condition="$data['complaint_type'] == $complaint_type_id.id"}{$complaint_type_id.name}{/if}
+                            {/volist}
+                        </td>
+                        <td>
+                            {volist name='complaint_topicid' id='complaint_topicid_id'}
+                            {if condition="$data['complaint_topicid'] == $complaint_topicid_id.id"}{$complaint_topicid_id.name}{/if}
+                            {/volist}
+                        </td>
+                        <td>{$data.complaint_title}</td>
+                        <td>{$data.complaint_content}</td>
+                        <td>{$data.complaint_addtime}</td>
+                        <td>
+                            {volist name='complaint_status' id='complaint_status_id'}
+                            {if condition="$data['complaint_status'] == $complaint_status_id.id"}{$complaint_status_id.name}{/if}
+                            {/volist}
+                        </td>
+                        <td>{$data.last_plan}</td>
+                        <td></td>
+                    </tr>
+                    {/notempty}
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    </div>
+</section>
+<!--_footer 作为公共模版分离出去-->
+{include file='pub/footer.html' /}
+<!--/_footer /作为公共模版分离出去-->
+
+<script type="text/javascript" src="__LIB__/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="__LIB__/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="__LIB__/webuploader/0.1.5/webuploader.min.js"></script>
+
+
+</body>
+</html>

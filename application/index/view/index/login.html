@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>医通Hr</title>
+	<link rel="stylesheet" href="/oldhr/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/oldhr/css/reset.css">
+	<link rel="stylesheet" href="/oldhr/css/index.css">
+	<script src="/oldhr/js/jquery.min.js"></script>
+	<script src="/oldhr/js/tingyun-rum.js"></script>
+	<script type="text/javascript" src="__LIB__/layer/2.4/layer.js"></script>
+</head>
+
+<body>
+<!-- <img class="bg-show" src="./static/images/login-bg.png" alt=""> -->
+
+<div class="login">
+	<div class="login-wrap">
+		<div class="title">
+			<h2 id="company_hrn">医通健康HR管理系统 </h2>
+			<span>Etong Health Care</span>
+		</div>
+
+		<div class="inp">
+			<input type="password" class="hideInput">
+			<div class="form-group">
+				<i class="form-user"></i>
+				<input id="user" type="text" placeholder="请输入登录账户" autocomplete="off">
+			</div>
+			<div class="form-group">
+				<i class="form-password"></i>
+				<input id="pass" type="text" onfocus="this.type='password'" placeholder="请输入密码" autocomplete="off">
+
+				<button id="send" type="button" onclick="login()">登 录</button>
+			</div>
+			<input type="password" class="hideInput">
+			<div class="alert alert-error">
+				<strong></strong>
+			</div>
+
+		</div>
+	</div>
+
+</div>
+
+
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		//清空之前存储的高亮节点
+		localStorage.clear();
+		$("#user").focus(function () {
+			$(".alert").hide()
+
+		})
+
+		$("#pass").focus(function () {
+			$(".alert").hide()
+
+		})
+	})
+	function login() {
+		function trim(str) { //删除左右两端的空格
+			return str.replace(/(^\s*)|(\s*$)/g, "");
+		}
+		var user = $("#user").val()
+		user = trim(user)
+		var pwd = $("#pass").val()
+
+		$.ajax({
+			url: "/index/index/login",
+			type: 'POST',
+			dataType: 'json',
+			data: { account: user, password: pwd },
+			beforeSend: function () {
+
+			},
+			success: function (result) {
+				if (result.code == 1) {
+					window.location.href = '/index/index/index';
+				} else {
+					$(".alert").show().children("strong").text(result.msg);
+					return false;
+				}
+
+			},
+			complete: function () {
+				//请求完成后的处理
+			},
+			error: function (XMLHttpRequest) {
+				//请求过程中发生了错误，记录下错误的代码 例如 : 404 => page not found
+				alert("请求遇到了错误 , 错误代码 : " + XMLHttpRequest.status);
+			}
+		});
+	}
+
+
+</script>
+
+</html>

@@ -1,0 +1,152 @@
+html,body{
+    /* height:100%; */
+    background:#f1f2f7;
+}
+.c-management {
+    width:100%;
+    height:100%;
+    /* background-color: #fff; */
+}
+.c-management .title {
+    width:100%;
+    height:43px;
+    position: relative;
+    background-color: #f1f2f7;
+    padding-left:20px;
+    box-sizing: border-box;
+}
+
+.c-management .title span{
+    display: inline-block;    
+    height:30px;
+    line-height: 30px;
+    text-align:center;   
+    margin: 10px 10px;
+    font-size: 16px;
+    color: #01b2a9;
+
+  
+}
+
+.c-management .manage-serach{
+   
+    height:100px;
+    margin-right: 20px;
+    margin-left:20px;
+    border:1px solid #000;
+    background-color: #f1f2f7;
+   position: relative;
+}
+/* .manage-serach .manage-serach-box{
+    position: relative;
+} */
+.manage-serach .serach-gh {
+    position: absolute;
+    left: 380px;
+    top: 0px;
+
+}
+.manage-serach .serach-zjh{
+    position: absolute;
+    left: 749px;
+    top: 0px;
+}
+.manage-serach .serach-zjh  #zjh {
+    width:220px;
+}
+.manage-serach .manage-serach-box input {
+    width:150px;
+    
+    position: absolute;
+    top: 8px;
+    left: 101px;
+    
+}
+.manage-serach span {
+    display: inline-block;
+    font-size: 16px;
+    margin: 13px;
+}
+.manage-serach select {
+    margin-right:112px;
+}
+#btn_search{
+    width:80px;
+    height:30px;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 7px;
+    color:#000;
+    position: absolute;
+    top: 50px;
+    left:750px;
+    background:#3fcbbe;
+}
+.c-management .c-year {
+ 
+ position: absolute;
+ top:10px;
+ right:20px;
+}
+.c-management .biaoge {
+    margin: 10px 20px 0px 20px;
+    background:#fff;
+}
+.c-management .biaoge th {
+    text-align: center;
+}
+
+
+.td_height{
+    height: 40px;
+    /* line-height: 40px */
+ }      
+
+/* 分页样式 */
+.wrapper{
+    
+    /* width:400px; */
+    /* height:100px;  */
+    margin-top: 60px;
+    margin-left: 300px;
+    text-align: right;
+    margin-right: 20px;
+
+}
+.M-box{  
+    display: inline;
+    position: relative;
+}
+.M-box span {
+    display: inline-block;
+    font-size: 18px;
+}
+.M-box a {
+    display: inline-block;
+    font-size: 18px;
+    margin: 0 5px;
+    
+}
+.M-box .jump-ipt{
+    width:40px;     
+    margin:0;
+    padding:0;
+    position: absolute;
+    right:-40px;
+}
+.tips{
+      
+    font-size: 18px;
+    display: inline;
+    margin-left: 50px;
+}
+.tips span {
+    margin: 0 5px;
+}
+.now, .count {
+    padding: 24px 0px;
+    color: #f00;
+}
+.active {
+    color:#3fcbbe;
+}

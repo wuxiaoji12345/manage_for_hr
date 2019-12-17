@@ -1,0 +1,116 @@
+﻿<!--_meta 作为公共模版分离出去-->
+{include file='pub/meta.html' /}
+<!--/meta 作为公共模版分离出去-->
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+{include file='pub/header.html' /}
+<!--/_header 作为公共模版分离出去-->
+<!--_menu 作为公共模版分离出去-->
+{include file='pub/menu.html' /}
+<!--/_menu 作为公共模版分离出去-->
+<link rel="stylesheet" type="text/css" href="__LIB__/bootstrap-3.3.7-dist/css/bootstrap.css" />
+<section class="Hui-article-box">
+	<nav class="breadcrumb" style="height: 50px;"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 项目管理 <span class="c-gray en">&gt;</span> 家属信息<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+	<div class="Hui-article" style="margin-top: 20px;">
+		<article class="cl pd-20">
+			<form class="mb-20" method="post" action="{:url('project/family_info/index')}">
+				<div class="row cl">
+					<label class="form-label col-xs-1 col-sm-1 text-r">员工姓名：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<input type="text" class="input-text" style="width:254px" placeholder="输入员工姓名"  name="employee_name" value="{$searchData['employee_name'] ?? ''}">
+					</div>
+					<label class="form-label col-xs-1 col-sm-1 text-r">工号：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<input type="text" class="input-text" style="width:254px" placeholder="输入工号"  name="gh" value='{$searchData["gh"]??""}'>
+					</div>
+					<label class="form-label col-xs-1 col-sm-1 text-r">家属姓名：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<input type="text" class="input-text" style="width:254px" placeholder="输入家属姓名"  name="family_name" value='{$searchData["family_name"]??""}'>
+					</div>
+					<label class="form-label col-xs-1 col-sm-1 text-r">证件号：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<input type="text" class="input-text" style="width:254px" placeholder="输入证件号"  name="zjh" value='{$searchData["zjh"]??""}'>
+					</div>
+				</div>
+				<div class="row cl" style="margin-top:20px;">
+					<label class="form-label col-xs-1 col-sm-1 text-r">公司：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<input type="text" class="input-text" style="width:254px" placeholder="输入公司"  name="company" value='{$searchData["company"]??""}'>
+					</div>
+					<label class="form-label col-xs-1 col-sm-1 text-r">部门：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<input type="text" class="input-text" style="width:254px" placeholder="输入部门"  name="department" value='{$searchData["department"]??""}'>
+					</div>
+					<div class="formControls col-xs-1 col-sm-1" style="margin-top:-3px;">
+						<button type="submit" class="btn btn-success radius" name=""><i class="Hui-iconfont">&#xe665;</i>查询</button>
+					</div>
+				</div>
+			</form>
+			<div class="cl pd-5 bg-1 bk-gray">
+				<span class="r pt-5 pr-5">
+                共有数据 ：<strong>{$count ?? '0'}</strong> 条
+            </span>
+			</div>
+			<div class="mt-20">
+				<table class="table table-border table-bordered table-hover table-bg mt-20">
+					<thead>
+					<tr class="text-c">
+						<th width="">序号</th>
+						<th width="">员工号</th>
+						<th width="">单位名称</th>
+						<th width="">部门名称</th>
+						<th width="">员工姓名</th>
+						<th width="">家属姓名</th>
+						<th width="">家属性别</th>
+						<th width="">家属婚否</th>
+						<th width="">家属证件号</th>
+						<th width="">体检套餐</th>
+						<th width="">体检默认城市</th>
+					</tr>
+					</thead>
+					<tbody>
+					{empty name="list"}
+					<tr class="text-c">
+						<td colspan="11">暂无数据</td>
+					</tr>
+					{/empty}
+					{notempty name="list"}
+					{volist name="list" id="vo"}
+					<tr class="text-c">
+						<td>{$Think.config.paginate.page_size*((!empty($Think.get.page)?($Think.get.page):1)-1)+($key+1)}</td>
+						<td>{$vo.u_job_code}</td>
+						<td>{$vo.u_sub_company}</td>
+						<td>{$vo.u_department}</td>
+						<td>{$vo.u_name}</td>
+						<td>{$vo.f_name}</td>
+						<td>{$vo.f_sex}</td>
+						<td>{$vo.f_marry}</td>
+						<td>{$vo.f_identify_code}</td>
+						<td>{$vo.pk_name}</td>
+						<td>{$vo.area_full_name}</td>
+					</tr>
+					{/volist}
+					{/notempty}
+					</tbody>
+				</table>
+				<div class="page-bootstrap">{$list->render()|raw}</div>
+			</div>
+		</article>
+	</div>
+</section>
+<!--_footer 作为公共模版分离出去-->
+{include file='pub/footer.html' /}
+<!--/_footer /作为公共模版分离出去-->
+
+<script type="text/javascript" src="__LIB__/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="__LIB__/laypage/1.2/laypage.js"></script>
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+
+</body>
+</html>

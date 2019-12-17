@@ -1,0 +1,76 @@
+<!--_meta 作为公共模版分离出去-->
+{include file='pub/meta.html' /}
+<link rel="stylesheet" type="text/css" href="__HUIADMIN__/css/style.css" />
+<link rel="stylesheet" type="text/css" href="__HUIADMIN__/css/contral.css" />
+<link rel="stylesheet" type="text/css" href="../../static/bootstrap/css/bootstrap.min.css" />
+<!--/meta 作为公共模版分离出去-->
+<style type="text/css">
+
+.table td {
+	text-align: center;
+}
+
+</style>
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+{include file='pub/header.html' /}
+<!--/_header 作为公共模版分离出去-->
+<!--_menu 作为公共模版分离出去-->
+{include file='pub/menu.html' /}
+<!--/_menu 作为公共模版分离出去-->
+<section class="Hui-article-box">
+	<nav class="breadcrumb" style="height: 50px;"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 项目总结 <span class="c-gray en">&gt;</span> 团检报告</nav>
+	<div class="Hui-article" style="margin-top: 20px;">
+		<article class="cl pd-20">
+			<div class="mt-20">
+				<table class="table table-border table-bordered table-hover table-bg mt-20">
+					<thead>
+						<tr class="text-c">
+							<th>编号</th>
+							<th>文件名称</th>
+							<th>项目状态</th>
+							<th>上传时间</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						{empty name="report_list"}
+						<tr class="text-c">
+							<td colspan="5">暂无数据</td>
+						</tr>
+						{/empty}
+						{notempty name="report_list"}	
+						{volist name="report_list" id='list'}				
+						<tr>
+							<td>{$list['id']}</td>
+							<td>{$list['t_file_name']}</td>
+							<td>{$list['project_status']}</td>
+							<td>{$list['t_upload_time']}</td>
+							<td><a href="{$list['download']}">{$list['download_word']}</a></td>
+						</tr>
+						{/volist}
+						{/notempty}
+					</tbody>
+				</table>
+			</div>
+			<div class="page-bootstrap" style="text-align: center">	
+				{$appendList->render()|raw}
+			</div>
+		</article>
+	</div>
+</section>
+<!--_footer 作为公共模版分离出去-->
+{include file='pub/footer.html' /}
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__HUIADMIN__/js/WdatePicker.js"></script>
+<script type="text/javascript" src="../../static/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+
+</body>
+</html>

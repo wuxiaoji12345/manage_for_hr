@@ -1,0 +1,83 @@
+
+jQuery(window).ready(function () {
+
+    // 判断是否登录
+    if (window.sessionStorage.getItem("is_login") != 1) {
+
+        window.location.href = "/index.html";
+        return false;
+
+
+    }
+
+
+    // 调用左边菜单栏
+    admin()
+
+
+    $("body").on("click", ".pro-manage", function () {
+        if ($(this).hasClass("addc")) {
+            $(this).parent().find("ul").show();
+            $(this).removeClass("addc");
+            $(this).children(".add").hide().siblings(".sub").show()
+        } else {
+            $(this).children(".add").show().siblings(".sub").hide()
+            $(this).parent().find("ul").hide();
+            $(this).addClass("addc");
+        }
+    })
+
+    //同步hr名字
+    var user = window.localStorage.getItem("username")
+    var pwd =  window.localStorage.getItem("password")
+    $.ajax({
+        url: 'http://apitest.etong-online.com/api/hr/user/userLogin.php',
+        dataType: 'json',
+        data: { account: user, password: pwd },
+        type: "POST",
+        success: function (res) {
+            // console.log(res)      
+            if (res.status == 1) {
+                window.localStorage.setItem("name", res.data.name)
+            }
+        }
+
+    })
+
+      
+
+
+
+    var old_password = window.localStorage.getItem('password')
+    var project_code = window.localStorage.getItem('mask');
+    var hr_code = window.localStorage.getItem('id');
+    var token = window.localStorage.getItem('taken');
+    var start_time = getNowFormatDate(0);
+    var end_time = getNowFormatDate(1);
+    $.ajax({
+        url: getUrl("reservation"),
+        type: "GET",
+        data: {
+            // start_time: start_time, end_time: end_time
+        },
+        dataType: "json",
+        success: function (res) {
+            var result = res.data;
+            //  console.log(result)
+            $(".news-yue .i-news h3").html(result.reservedNum)
+            $(".news-jian .i-news h3").html(result.checkNum)
+            $(".news-up .i-news h3").html(result.uploadedNum)
+            $(".news-home .i-news h3").html(result.familyReservedNum)
+            // console.log(  $(".news-yue .i-news h3").text()  )
+        },
+        error: function (XMLHttpRequest) {
+            //请求过程中发生了错误，记录下错误的代码 例如 : 404 => page not found
+            alert("请求遇到了错误 , 错误代码 : " + XMLHttpRequest.status);
+        }
+
+    })
+
+
+
+});
+

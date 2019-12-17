@@ -1,0 +1,15 @@
+<script type="text/javascript" src="__LIB__/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__LIB__/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="__HUI__/js/H-ui.js"></script>
+<script type="text/javascript" src="__HUIADMIN__/js/H-ui.admin.page.js"></script>
+<script type="text/javascript">
+    $(".show_li").click(function () {
+        localStorage.setItem("activeId", $(this).attr("id"));
+    });
+    var currentActive = localStorage.getItem("activeId");
+    if (currentActive) {
+        var $currentActive = $("#" + currentActive);
+        $currentActive.addClass("current");
+        $currentActive.parent().parent().attr("style", "display: block;");
+    }
+</script>

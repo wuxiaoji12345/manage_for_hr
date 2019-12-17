@@ -1,0 +1,554 @@
+﻿<!--_meta 作为公共模版分离出去-->
+{include file='pub/meta.html' /}
+<!--/meta 作为公共模版分离出去-->
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+{include file='pub/header.html' /}
+<!--/_header 作为公共模版分离出去-->
+<!--_menu 作为公共模版分离出去-->
+{include file='pub/menu.html' /}
+<!--/_menu 作为公共模版分离出去-->
+<link rel="stylesheet" type="text/css" href="__HUIADMIN__/css/style.css" />
+<link rel="stylesheet" type="text/css" href="__HUIADMIN__/css/contral.css" />
+<link rel="stylesheet" type="text/css" href="../../static/bootstrap/css/bootstrap.min.css" />
+<style type="text/css">
+	.yu-date{
+		width:100%;
+		padding-top: 50px;
+		padding-left:20px;
+		box-sizing: border-box;
+		position: relative;
+	}
+	#l-yu-date{
+		width:55%;
+		height:400px;
+		background:#fff!important;
+		padding-right:5px;
+	}
+	#r-yu-date{
+		width:42.5%;
+		height:330px;
+		background-color:#fff!important;
+		position: absolute;
+		top: 30px;
+		right: 12px;
+	}
+	.yu-date span {
+		width:42.5%;
+		height:70px;
+		font-size: 20px;
+		display: block;
+		background-color:#3fcbbe;
+		color:#fff;
+		text-align: center;
+		line-height: 70px;
+		border:1px solid #ccc;
+		border-radius: 5px;
+		position: absolute;
+		right: 12px;
+		top: 360px;
+	}
+	.tbint .set-add{
+		width:13px;
+		height:13px;
+		display: inline-block;
+		background:url("/oldhr/images/22.png") no-repeat center;
+	}
+	.tbint .set-sub{
+		width: 13px;
+		height:13px;
+		display: inline-block;
+		display: none;
+		background:url("/oldhr/images/23.png") no-repeat center;
+	}
+	.ss .set-add{
+		width:13px;
+		height:13px;
+		display: inline-block;
+		background:url("/oldhr/images/22.png") no-repeat center;
+	}
+	.ss .set-sub{
+		width:13px;
+		height:13px;
+		display: inline-block;
+		display: none;
+		background:url("/oldhr/images/23.png") no-repeat center;
+	}
+	.set-meal{
+		cursor: pointer;
+	}
+	.set-all {
+		cursor: pointer;
+	}
+	#tc{
+		cursor: pointer;
+	}
+</style>
+<section class="Hui-article-box">
+	<nav class="breadcrumb" style="height: 50px;"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>
+		项目过程管理 <span class="c-gray en">&gt;</span>
+		体检数据汇总<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+	<div class="Hui-article" style="margin-top: 20px;">
+		<article class="cl pd-20" >
+			<div class="yu-date">
+				<div id="l-yu-date"></div>
+				<div id="r-yu-date"></div>
+				<span>{$e_name}</span>
+			</div>
+			<!--<iframe src="{:url('process/sum_echart')}" id="iframepage1" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" onLoad="iFrameHeight('iframepage1')">
+			</iframe>-->
+			<form class="mb-20" method="post" action="/process/Process/index.html">
+				<div class="row cl">
+					<label class="form-label col-xs-1 col-sm-1 text-r">预约城市：</label>
+					<div class="formControls col-xs-2 col-sm-5 text-l" style="margin-top: -3px;">
+						<span class="select-box radius ">
+							<select name="province_code" size=1 id="store_province_code" class="select region_type1 type1_province" style="font-size:14px;width:200px;margin-right:20px;">
+							</select>
+							<select name="city_code" size=1 id="store_city_code" class=" select region_type1 type1_city" style="font-size:14px;width:200px;margin-right:20px;">
+								<option value="0">请选择城市</option>
+							</select>
+							<select name="area_code" size=1 id="store_area_code" class=" select region_type1 type1_area" style="font-size:14px;width:200px;">
+								<option value="0">请选择县/区</option>
+							</select>
+						</span>
+					</div>
+					<label class="form-label col-xs-1 col-sm-1 text-r">体检套餐：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+                        <span class="select-box radius ">
+                            <select name="project" class="select">
+                                <option value="">全部</option>
+                                {volist name='project_list' id='project_list_id'}
+                                    <option {if condition="$searchData['project'] == $project_list_id.p_code"}selected{/if} value="{$project_list_id.p_code}">{$project_list_id.p_name}</option>
+								{/volist}
+                            </select>
+                        </span>
+					</div>
+					<label class="form-label col-xs-1 col-sm-1 text-r">预约类型：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+                        <span class="select-box radius ">
+                            <select name="yu_type" class="select">
+                                <option value="0">全部</option>
+                                {volist name='yu_type' id='yu_type_id'}
+                                    <option {if condition="$searchData['yu_type'] == $yu_type_id.id"}selected{/if} value="{$yu_type_id.id}">{$yu_type_id.name}</option>
+								{/volist}
+                            </select>
+                        </span>
+					</div>
+				</div>
+				<div class="row cl" style="margin-top: 20px;">
+					<label class="form-label col-xs-1 col-sm-1 text-r">体检开始时间：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<input id="start_time" name="start_time" type="text" class="input-text" placeholder="选择开始时间"  style="width:254px" onClick="WdatePicker()" value="{$searchData['start_time'] ?? ''}">
+					</div>
+					<label class="form-label col-xs-1 col-sm-1 text-r">体检结束时间：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<input id="end_time" name="end_time" type="text" class="input-text" placeholder="选择结束时间"  style="width:254px" onClick="WdatePicker()" value="{$searchData['end_time'] ?? ''}">
+					</div>
+					<div class="formControls col-xs-1 col-sm-1" style="margin-top: -3px;">
+						<button type="submit" value="1" class="btn btn-success radius" name="submit"><i class="Hui-iconfont">&#xe665;</i>查询</button>
+					</div>
+				</div>
+			</form>
+			<div class="mt-20">
+				<table class="table table-border table-bordered table-hover table-bg table-sort">
+					<thead>
+					<tr class="text-c">
+						<th width="">预约城市</th>
+						<th width="">体检套餐</th>
+						<!--<th width="">体检时间</th>-->
+						<th width="">已预约</th>
+						<th width="">已到检</th>
+						<th width="">报告已处理</th>
+						<th width="">到检率</th>
+					</tr>
+					</thead>
+					{neq name="sub" value="1"}
+					{neq name="count" value="0"}
+					<tr class="text-c ss">
+						<td>总计</td>
+						<td class="set-all">套餐总计<i class="set-add"></i><i class="set-sub"></i></td>
+						<td>{$total_data.sum1}</td>
+						<td>{$total_data.sum2}</td>
+						<td>{$total_data.sum3}</td>
+						<td>{$total_data.sum4}</td>
+					</tr>
+					{/neq}
+					{/neq}
+					{eq name="sub" value="1"}
+					{neq name="count" value="0"}
+					<tr class="text-c ss">
+						<td>总计</td>
+						<td id="tc">套餐总计<i class="set-add"></i><i class="set-sub"></i></td>
+						<td>{$total_data.sum1}</td>
+						<td>{$total_data.sum2}</td>
+						<td>{$total_data.sum3}</td>
+						<td>{$total_data.sum4}</td>
+					</tr>
+					{/neq}
+					{/eq}
+					{eq name="count" value="0"}
+					<tr class="text-c">
+						<td colspan="6">暂无数据</td>
+					</tr>
+					{/eq}
+					<tbody class="tbint" {eq name="sub" value="1" } style="display:none;" {/eq} >
+					{neq name="sub" value="1"}
+					{neq name="count" value="0"}
+					{volist name="list" id="vo" }
+					<tr class="master-{$key} text-c" >
+						<td id="{$vo.area_code}">{$vo.area_full_name}</td>
+						<td class="set-meal">套餐总计<i class="set-add"></i><i class="set-sub"></i></td>
+						<!--<td>{$vo.append_schedule}</td>-->
+						<td>{$vo.append_total_num}</td>
+						<td>{$vo.append_arrive_num}</td>
+						<td>{$vo.append_report_num}</td>
+						<td>{$vo.check_rate}</td>
+					</tr>
+					{/volist}
+					{/neq}
+					{/neq}
+					{eq name="sub" value="1"}
+					{neq name="count" value="0"}
+					{volist name="list" id="vo" }
+					<tr class="text-c">
+						<td>{$vo.area_full_name}</td>
+						<td>{$vo.p_name}</td>
+						<!--<td>{$vo.append_schedule}</td>-->
+						<td>{$vo.append_total_num}</td>
+						<td>{$vo.append_arrive_num}</td>
+						<td>{$vo.append_report_num}</td>
+						<td>{$vo.check_rate}</td>
+					</tr>
+					{/volist}
+					{/neq}
+					{/eq}
+					</tbody>
+				</table>
+			</div>
+		</article>
+	</div>
+</section>
+<!--_footer 作为公共模版分离出去-->
+{include file='pub/footer.html' /}
+<!--/_footer /作为公共模版分离出去-->
+<script type="text/javascript" src="__LIB__/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="__LIB__/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="__LIB__/webuploader/0.1.5/webuploader.min.js"></script>
+<script type="text/javascript" src="/static/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="__HUIADMIN__/js/WdatePicker.js"></script>
+<script type="text/javascript" src="/oldhr/js/echarts.min.js"></script>
+<script type="text/javascript" src="/oldhr/js/progect/echart.process.js"></script>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+	$(function(){
+		//  省份加载
+		getProvince('{:arrval($searchData,"province_code")}')
+
+		//  市区加载
+		getCity('{:arrval($searchData,"province_code")}','{:arrval($searchData,"city_code")}')
+
+		//  搜索区域
+		getArea('{:arrval($searchData,"city_code")}','{:arrval($searchData,"area_code")}')
+
+		//  省份修改
+		$('select[name=province_code]').on('change',function(){
+			var province_code = $(this).val();
+
+			if(province_code != ''){
+				getCity(province_code)
+			}else{
+				$("select[name=city_code]").val('');
+				$('select[name=area_code]').val('')
+			}
+		})
+		//  市区变化
+		$('select[name=city_code]').on('click',function(){
+
+			var city_code = $(this).val()
+
+			if(city_code != ''){
+				getArea(city_code)
+			}
+		})
+		function getProvince(checked=''){
+			$.ajax({
+				url: '/index/Ajax/provinceList',
+				type: 'POST',
+				dataType: 'json',
+				success: function(result) {
+					var error_code = result.code;
+
+					if(error_code == 0){
+
+						var data = result.data
+
+						html = '<option value="">请选择省份</option>';
+						data.map(function(item){
+
+							if(checked == item.id){
+
+								html += '<option value="'+item.id+'" selected>'+item.area_short_name+'</option>'
+							}else{
+								html += '<option value="'+item.id+'">'+item.area_short_name+'</option>'
+							}
+
+						})
+
+						$('select[name=province_code]').html(html)
+
+
+					}
+				},
+				error: function (errorMsg) {
+					alert('获取省份列表失败');
+				}
+			})
+		}
+
+		function getCity(parent_code='',checked=''){
+
+			if(parent_code == '')
+				return ;
+
+			$.ajax({
+				url: '/index/Ajax/cityList',
+				type: 'post',
+				dataType: 'json',
+				data:{parent_code:parent_code},
+				success: function(result) {
+
+					var error_code = result.code;
+
+					if(error_code == 0){
+
+						var data = result.data
+
+						html = '<option value="">请选择城市</option>';
+						data.map(function(item){
+
+							if(checked == item.id){
+
+								html += '<option value="'+item.id+'" selected>'+item.area_short_name+'</option>'
+							}else{
+								html += '<option value="'+item.id+'">'+item.area_short_name+'</option>'
+							}
+
+						})
+
+						$('select[name=city_code]').html(html)
+
+
+					}
+				}
+			})
+
+		}
+
+		function getArea(parent_code='',checked=''){
+
+			if(parent_code == '')
+				return ;
+
+			$.ajax({
+				url: '/index/Ajax/areaList',
+				type: 'post',
+				dataType: 'json',
+				data:{parent_code:parent_code},
+				success: function(result) {
+
+					var error_code = result.code;
+
+					if(error_code == 0){
+
+						var data = result.data
+
+						html = '<option value="">请选择县/区</option>';
+						data.map(function(item){
+
+							if(checked == item.id){
+
+								html += '<option value="'+item.id+'" selected>'+item.area_short_name+'</option>'
+							}else{
+								html += '<option value="'+item.id+'">'+item.area_short_name+'</option>'
+							}
+
+						})
+
+						$('select[name=area_code]').html(html)
+
+
+					}
+				}
+			})
+
+		}
+	});
+
+	function iFrameHeight(iframepage) {
+		var ifm= document.getElementById(iframepage);
+		var subWeb = document.frames ? document.frames[iframepage].document : ifm.contentDocument;
+		if(ifm != null && subWeb != null) {
+			ifm.height = subWeb.body.offsetHeight;
+			if (iframepage == 'iframepage1') {
+				ifm.height = 650;
+			} else if(iframepage == 'iframepage2'){
+				ifm.height = 350;
+			}
+			ifm.width = '100%';
+		}
+	}
+
+	$('body').on('click', '#tc', function () {
+
+		if ($(this).hasClass("flag")) {
+			$(this).removeClass("flag");
+			$(this).children(".set-add").css("display", "inline-block");
+			$(this).children(".set-sub").hide();
+			$(".tbint").hide();
+		} else {
+			$(this).addClass("flag");
+			$(this).children(".set-add").hide();
+			$(this).children(".set-sub").css("display", "inline-block");
+			$(".tbint").show().css("background-color", "#ddd");
+		}
+	})
+
+	// 点击全国套餐总计功能
+	function getAll(_this, master) {
+		$.ajax({
+			url: '/process/process/sum_all',
+			methods: "GET",
+			dataType: "json",
+			data: {},
+			success: function (res) {
+				  //console.log(master)
+				  //console.log(res)
+				if (res.code == 1) {
+					var result = res.data;
+					var str12 = ''
+					$.each(result, function (key, val) {
+						str12 += '<tr class="' + master + '" style="text-align:center;" bgcolor="#ddd"  >' +
+								'<td>' + '全国' + '</td>' +
+								'<td>' + val.p_name + '</td>' +
+								'<td>' + val.append_total_num + '</td>' +
+								'<td>' + Number(val.append_arrive_num) + '</td>' +
+								'<td>' + Number(val.append_report_num) + '</td>' +
+								'<td>' + val.check_rate + '</td>' +
+								'</tr>';
+					})
+
+					_this.parent().after(str12);
+				}
+			}
+		})
+	}
+
+	// 点击全国套餐总计获取数据展示
+
+	$("body").on("click", ".set-all", function () {
+		var areap_code = $(this).prev().attr("id");
+		var master = $(this).parent().attr("class");
+		var _this = $(this);
+		if ($(this).hasClass("flag")) {
+			var slave = $(this).parent().siblings();
+			for (i = 0; i < slave.length; i++) {
+				if (slave.eq(i).hasClass(master)) {
+					slave.eq(i).remove();
+				}
+			}
+
+			$(this).removeClass("flag");
+			$(this).children(".set-add").css("display", "inline-block");
+			$(this).children(".set-sub").hide();
+
+		} else {
+			getAll(_this, master)
+			$(this).addClass("flag");
+			$(this).children(".set-add").hide();
+			$(this).children(".set-sub").css("display", "inline-block");
+
+		}
+
+
+	})
+
+	// 点击各个城市套餐总计功能
+	function getSum(areap_code, _this, master) {
+		$.ajax({
+			url: '/process/process/sum_search',
+			method: "GET",
+			dataType: "json",
+			data: {
+				area: areap_code
+			},
+			success: function (res) {
+				   //console.log(res)
+				if (res.code == 1) {
+					var result = res.data;
+					//  console.log(result)
+					var strd = '';
+					$.each(result, function (key, val) {
+						strd += '<tr style="text-align:center;" bgcolor="#ddd" class="' + master + '" >' +
+								'<td>' + val.area_full_name + '</td>' +
+								'<td>' + val.p_name + '</td>' +
+								'<td>' + val.append_total_num + '</td>' +
+								'<td>' + Number(val.append_arrive_num) + '</td>' +
+								'<td>' + Number(val.append_report_num) + '</td>' +
+								'<td>' + val.check_rate + '</td>' +
+								'</tr>';
+					});
+
+					_this.parent().after(strd);
+
+				}
+
+			},
+
+			error: function (XMLHttpRequest) {
+
+				//请求过程中发生了错误，记录下错误的代码 例如 : 404 => page not found
+				alert("请求遇到了错误 , 错误代码 : " + XMLHttpRequest.status);
+			}
+
+		})
+
+
+	}
+
+	// 点击各个城市套餐总计获取数据展示
+
+	$("body").on("click", ".set-meal", function () {
+		var areap_code = $(this).prev().attr("id");
+		var master = $(this).parent().attr("class");
+		var _this = $(this);
+
+		if ($(this).hasClass("flag")) {
+			var slave = $(this).parent().siblings();
+			// console.log(slave)
+			for (i = 0; i < slave.length; i++) {
+				if (slave.eq(i).hasClass(master)) {
+					slave.eq(i).remove();
+				}
+			}
+
+			$(this).removeClass("flag");
+			$(this).children(".set-add").css("display", "inline-block");
+			$(this).children(".set-sub").hide();
+
+		} else {
+			getSum(areap_code, _this, master)
+			$(this).addClass("flag");
+			$(this).children(".set-add").hide();
+			$(this).children(".set-sub").css("display", "inline-block");
+
+		}
+
+
+
+	})
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!--_meta 作为公共模版分离出去-->
+{include file='pub/meta.html' /}
+<link rel="stylesheet" type="text/css" href="__HUIADMIN__/css/style.css" />
+<link rel="stylesheet" type="text/css" href="__HUIADMIN__/css/contral.css" />
+<link rel="stylesheet" type="text/css" href="../../static/bootstrap/css/bootstrap.min.css" />
+<!--/meta 作为公共模版分离出去-->
+<style type="text/css">
+table{
+
+	table-layout:fixed;/* 只有定义了表格的布局算法为fixed，下面td的定义才能起作用。 */
+}
+td{
+	width:100%;
+	word-break:keep-all;/* 不换行 */
+	/*white-space:nowrap;*//* 不换行 */
+	overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+	/*text-overflow:ellipsis;*//* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+}
+.table td {
+	text-align: center;
+}
+.main_on p {
+
+	float: left;
+	padding-right: 30px;
+	font-weight: 600;
+	font-size: 18px;
+
+}
+.main_on {
+
+	margin-left: 20px;
+	overflow: hidden;
+	height: 50px;
+	line-height: 60px;
+}
+</style>
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+{include file='pub/header.html' /}
+<!--/_header 作为公共模版分离出去-->
+<!--_menu 作为公共模版分离出去-->
+{include file='pub/menu.html' /}
+<!--/_menu 作为公共模版分离出去-->
+<section class="Hui-article-box">
+	<nav class="breadcrumb" style="height: 50px;"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 预约信息查询 <span class="c-gray en">&gt;</span> 家属信息管理</nav>
+	<div class="Hui-article" style="margin-top: 20px;">
+		<article class="cl pd-20">
+			<form class="mb-20" action="{:url('reservation_query/FamilyReservation/index')}" method="post">
+				<div class="row cl"> 
+					<label class="form-label col-xs-1 col-sm-1 text-r">手机号：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<input type="text" class="input-text" style="width:254px" placeholder="请输入手机号"  name="append_mobile" value="{$searchData['append_mobile'] ?? ''}">
+					</div>				
+
+					<label class="form-label col-xs-1 col-sm-1 text-r">预约姓名：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<input type="text" class="input-text" style="width:254px" placeholder="请输入员工姓名"  name="append_name" value="{$searchData['append_name'] ?? ''}">
+					</div>
+
+					<label class="form-label col-xs-1 col-sm-1 text-r">证件号：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<input type="text" class="input-text" style="width:254px" placeholder="请输入证件号"  name="append_identify_code" value="{$searchData['append_identify_code'] ?? ''}">
+					</div>					                           
+				</div>
+				<div class="row cl" style="margin-top: 15px;">
+
+					<label class="form-label col-xs-1 col-sm-1 text-r">报告状态：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<span class="select-box radius ">
+							<select name="append_report_status" class="select">
+								<option value="0">全部</option>
+								{volist name='append_report_status' id='append_report_status_id'}
+								<option {if condition="$searchData['append_report_status'] == $append_report_status_id.value"}selected{/if} value="{$append_report_status_id.value}">{$append_report_status_id.name}</option>
+								{/volist}
+							</select>
+						</span>
+					</div>				
+
+					<label class="form-label col-xs-1 col-sm-1 text-r">预约状态：</label>
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<span class="select-box radius ">
+							<select name="append_status" class="select">
+								<option value="0">全部</option>
+								{volist name='append_status' id='append_status_id'}
+								<option {if condition="$searchData['append_status'] == $append_status_id.value"}selected{/if} value="{$append_status_id.value}">{$append_status_id.name}</option>
+								{/volist}
+							</select>
+						</span>
+					</div>				
+				</div>
+				<div class="row cl" style="margin-top: 15px;">	
+					<label class="form-label col-xs-1 col-sm-1 text-r">查询类型：</label>		
+					<div class="formControls col-xs-2 col-sm-2 text-l" style="margin-top: -3px;">
+						<span class="select-box radius ">
+							<select name="query_type" class="select" id="query_type" >
+								{volist name='query_type' id='query_type_id'}
+								<option {if condition="$searchData['query_type'] == $query_type_id.value"}selected{/if} value="{$query_type_id.value}">{$query_type_id.name}</option>
+								{/volist}
+							</select>
+						</span>
+					</div>
+					<div class="formControls col-xs-1 col-sm-1 text-l" style="margin-top: -3px;">
+						<input id="start_time" name="start_time" type="text" class="input-text" placeholder="选择开始时间"  onClick="WdatePicker()" value="{$searchData['start_time'] ?? ''}">
+					</div>
+					<div class="formControls col-xs-1 col-sm-1 text-l" style="margin-top: -3px;">
+						<input id="end_time" name="end_time" type="text" class="input-text" placeholder="选择结束时间"  onClick="WdatePicker()" value="{$searchData['end_time'] ?? ''}">
+					</div>				
+					<div class="formControls col-xs-1 col-sm-1" style="margin-top: -3px;">
+						<button type="submit" class="btn btn-success radius" name="submit" value=1><i class="Hui-iconfont">&#xe665;</i>查询</button>			
+
+					</div>		
+					<div class="formControls col-xs-1 col-sm-1" style="margin-top: -3px;">
+						<button type="submit" class="btn btn-success radius" name="submit" value=2><i class="Hui-iconfont">&#xe665;</i>导出</button>
+					</div>
+				</div>
+
+			</form>
+			<div class="cl pd-5 bg-1 bk-gray mt-20">                 
+				<div class="main_on">
+					<div style="width:380px;height:30px;line-height: 30px;border-right: 2px solid #ccc;text-align:center;font-weight: 600;font-size: 18px;float:left;margin-top: 10px">
+						今日预约人数：<span id="appendToday" style="font-weight: 300;"><span style="color: #f8612c">{$info['appendToday']}</span>人</span>
+					</div>
+					<div style="width:380px;height:30px;line-height: 30px;border-right: 2px solid #ccc;text-align:center;font-weight: 600;font-size: 18px;float:left;margin-top: 10px">
+						今日取消预约人数：<span id="cancelToday" style="font-weight: 300;"><span style="color: #5eb95e">{$info['cancelToday']}</span>人</span>
+					</div>
+					<div style="width:380px;height:30px;line-height: 30px;border-right: 2px solid #ccc;text-align:center;font-weight: 600;font-size: 18px;float:left;margin-top: 10px">
+						今日待体检人数：<span id="checkToday" style="font-weight: 300;"><span style="color: #4fa6f8">{$info['checkToday']}</span>人</span>
+					</div>
+				</div>
+			</div>
+			<div class="mt-20">
+				<table class="table table-border table-bordered table-hover table-bg mt-20">
+					<thead>
+						<tr class="text-c">
+							<!-- <th width="25"><input type="checkbox" name="" value=""></th> -->
+							<th>编号</th>
+							<th>姓名</th>
+							<th>所属员工</th>
+							<th>性别</th>
+							<th>婚姻</th>
+							<th>证件类型</th>
+							<th>证件号码</th>
+							<th>手机号码</th>
+							<th>预约单号</th>
+							<th>订单号</th>
+							<th>预约门店</th>
+							<th>体检日期</th>
+							<th>体检套餐</th>
+							<th>自费加项包</th>
+							<th>绑定加项包</th>
+							<th>预约状态</th>
+							<th>报告状态</th>
+							<th>报告处理时间</th>
+						</tr>
+
+
+
+					</thead>
+					<tbody class="list_1">	
+						{empty name="data"}
+						<tr class="text-c">
+							<td colspan="18">暂无数据</td>
+						</tr>
+						{/empty}
+						{notempty name="data"}	
+						{volist name="data" id='list'}			
+						<tr>
+							<!--      	<td width="25"><input type="checkbox" name="" value=""></td> -->
+							<td>{$list['id']}</td>
+							<td>{$list['append_name']}</td>
+							<td>{$list['belongs_staff']}</td>
+							<td>{$list['append_sex']}</td>
+							<td>{$list['append_marry']}</td>
+							<td>{$list['append_identify_type']}</td>
+							<td>{$list['append_identify_code']}</td>
+							<td>{$list['append_mobile']}</td>
+							<td>{$list['append_code']}</td>
+							<td>{$list['append_order_code']}</td>
+							<td>{$list['store_name']}</td>
+							<td>{$list['append_schedule']}</td>
+							<td>{$list['p_name']}</td>
+							<td>{$list['addon_expense']}</td>
+							<td>{$list['bindAddons']}</td>
+							<td>{$list['append_status']}</td>
+							<td>{$list['append_report_status']}</td>
+							<td>{$list['report_upload_time_days']}</td>                     	
+						</tr>
+						{/volist}
+						{/notempty}
+
+					</tbody>
+				</table>
+			</div>
+			<div class="page-bootstrap" style="text-align: center">	
+				{$appendList->render()|raw}
+			</div>
+		</article>
+	</div>
+</section>
+<!--_footer 作为公共模版分离出去-->
+{include file='pub/footer.html' /}
+<!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__HUIADMIN__/js/WdatePicker.js"></script>
+<script type="text/javascript" src="../../static/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+﻿<!--_meta 作为公共模版分离出去-->
+{include file='pub/meta.html' /}
+<!--/meta 作为公共模版分离出去-->
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+{include file='pub/header.html' /}
+<!--/_header 作为公共模版分离出去-->
+<!--_menu 作为公共模版分离出去-->
+{include file='pub/menu.html' /}
+<!--/_menu 作为公共模版分离出去-->
+<section class="Hui-article-box">
+    <nav class="breadcrumb" style="height: 50px;">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>
+        项目管理 <span class="c-gray en">&gt;</span>
+        三方通讯录<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+                 href="javascript:location.replace(location.href);" title="刷新">
+        <i class="Hui-iconfont">&#xe68f;</i></a>
+    </nav>
+    <div class="Hui-article" style="margin-top: 20px;">
+        <article class="cl pd-20">
+            {notempty name="contact_type_list"}
+                {volist name="contact_type_list" id="vo"}
+                    <iframe src="{:url('three_communication/hr_contact_type',['type'=>$vo.id])}" id="iframepage{$vo.id}" frameborder="0" scrolling="auto" marginheight="0" marginwidth="0" onLoad="iFrameHeight('iframepage{$vo.id}')">
+                    </iframe>
+                {/volist}
+            {/notempty}
+        </article>
+    </div>
+</section>
+<!--_footer 作为公共模版分离出去-->
+{include file='pub/footer.html' /}
+<!--/_footer /作为公共模版分离出去-->
+
+<script type="text/javascript" src="__LIB__/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="__LIB__/laypage/1.2/laypage.js"></script>
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    function iFrameHeight(iframepage) {
+        var ifm= document.getElementById(iframepage);
+        var subWeb = document.frames ? document.frames[iframepage].document : ifm.contentDocument;
+        if(ifm != null && subWeb != null) {
+            ifm.height = subWeb.body.offsetHeight;
+            if (iframepage == 'iframepage1') {
+                ifm.height = 430;
+            } else if(iframepage == 'iframepage2'){
+                ifm.height = 350;
+            } else if(iframepage == 'iframepage3') {
+                ifm.height = 350;
+            }else{
+                ifm.height = 350;
+            }
+            ifm.width = '100%';
+        }
+    }
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+
+</body>
+</html>
